@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
-		<!-- <zhihu-title></zhihu-title> -->
-		<div :style="{backgroundImage: 'url(' + NEWS_DETAIL.image + ')'}" class="image content">
+		<loading v-show="LOADING"></loading>
+		<div :style="{backgroundImage: 'url(' + NEWS_DETAIL.image + ')'}" class="image">
 			<span class="image-source">{{NEWS_DETAIL.image_source}}</span>
 			<div class="title">{{ NEWS_DETAIL.title }}</div>
 		</div>
@@ -10,24 +10,49 @@
 </template>
 <script type="text/javascript">
 	import { mapGetters } from 'vuex'
-	import Title from './Title'
+	import Loading from './Loading'
 
 	export default {
 		name: 'NewsDetail',
-		computed: {
-			...mapGetters(['NEWS_DETAIL'])
+		data() {
+			return {
+				startPosition: 0,
+				endPosition: 0,
+				isMove: false
+			}
 		},
 		created() {
-			console.log('create..', this.$route.params.id)
 			this.$store.dispatch('FECTH_NEWS_DETAIL', this.$route.params.id);
+			window.addEventListener('touchstart', this.touchstart, false);
+			window.addEventListener('touchmove', this.touchmove, false);
+			window.addEventListener('touchend', this.touchend, false);
+		},
+		computed: {
+			...mapGetters(['NEWS_DETAIL', 'LOADING'])
 		},
 		components: {
-			'zhihu-title': Title
+			'loading': Loading,
+		},
+		methods: {
+			touchmove(event) {
+				this.endPosition = event.touches[0].pageX;
+				if(this.endPosition - this.startPosition > 50
+						&& !this.isMove) {
+					this.isMove = true
+					this.$router.goBackPage()
+				}
+			},
+			touchstart(event) {
+				this.startPosition = event.touches[0].pageX;
+			},
+			touchend() {
+				this.isMove = false;
+			}
 		}
 	};
 </script>
 <style type="text/css" scoped>
-	.image{
+	.image {
 		width: 100%;
 		height: 250px;
 		background-repeat: no-repeat;
@@ -48,4 +73,11 @@
 		bottom: 0;
 		right: 0;
 	}
+	.icon {
+		color: #fff;
+		position: absolute;
+		top: 10px;
+		left: 10px;
+	}
+
 </style>

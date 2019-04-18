@@ -80,6 +80,34 @@
         </a>
       </li>
     </ul>
+    <div class="test">
+      1<br>
+       1<br>
+        1<br>
+
+         1<br>
+          1<br>
+           1<br>
+            1<br>
+
+             1<br>
+              1<br>
+               1<br>
+                1<br>
+                 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+                  1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+                   1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+                    1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+                     1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+                      1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+                       1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+                        1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br> 1<br>
+      <router-link to="./theme">theme</router-link>     
+
+      <!-- <button @click="back">back</button> -->
+          
+      <!-- <router-view/> -->
+    </div>
   </div>
 </template>
 
@@ -88,10 +116,35 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      position: 0
+    }
+  },
+  // beforeRouteLeave(to, from, next) {
+  //   this.position = $('.test').scrollTop();
+  //   next();
+  // },
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     $('.test').scrollTop(vm.position);
+  //   })
+  // },
+  mounted() {
+    console.log('mounted')
+    window.addEventListener('scroll', function() {
+      console.log('scroll')
+    })
+  }
+  ,
+  activated() {
+    console.log('activated')
+  },
+  methods: {
+    back() {
+      this.$router.goBackPage()
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -109,5 +162,14 @@ li {
 }
 a {
   color: #42b983;
+}
+.hello {
+  /*overflow: scroll;*/
+}
+.test {
+  width: 100%;
+  height: 300px;
+  background-color: red;
+  /*overflow-y: auto;*/
 }
 </style>

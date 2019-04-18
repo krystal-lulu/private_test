@@ -1,6 +1,6 @@
 <template>
 	<div class="container" >
-			<span class="glyphicon text-left icon"  :class="!back? 'glyphicon-menu-hamburger': 'glyphicon-chevron-left' " aria-hidden="true"  @click="prev()"></span>
+			<span class="glyphicon glyphicon-menu-hamburger text-left icon" aria-hidden="true"></span>
 			<div class="text-center title">{{ title }}</div>
 	</div>
 </template>
@@ -8,24 +8,17 @@
 <script>
 	export default {
 		name: 'Title',
-		props: ['goBack'],
+		props: ['goBack', 'title'],
 		data() {
 			return {
 				position: 'fixed'
 			}
 		},
 		computed: {
-			title() {
-				return this.$route.meta.title
-			},
-			back() {
-				return this.$route.meta.back
-			}
+		
 		},
 		methods: {
-			prev() {
-				this.$router.goBackPage()
-			}
+		
 		}
 	};
 </script>
@@ -33,11 +26,13 @@
 <style scoped>
 	.container {
 		width: 100%;
-		height: 50px;
+		height: 7vh;
 		background-color: red;
 		display: flex;
 		align-items: center;
 		z-index: 999;
+		position: fixed;
+		top: 0;
 	}
 	.icon {
 		color: #fff;
